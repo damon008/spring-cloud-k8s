@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: order-service
+  #redis: #redis相关配置
+    #password: 123456 #有密码时设置
+  cloud:
+    kubernetes:
+      config:
+        sources:
+         - name: ${spring.application.name}
+           namespace: default
+      discovery:
+        all-namespaces: true
+      reload:
+        #自动更新配置的开关设置为打开
+        enabled: true
+        #更新配置信息的模式：polling是主动拉取，event是事件通知
+        mode: polling
+        #主动拉取的间隔时间是500毫秒
+        period: 500
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  mvc:
+    throw-exception-if-no-handler-found: true
+  main:
+    allow-bean-definition-overriding: true # 当遇到同样名称时，是否允许覆盖注册
+    
+logging:
+  path: /data/${spring.application.name}/logs
+    

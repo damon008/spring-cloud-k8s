@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service-deployment
+  labels:
+    app: order-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-service
+  template:
+    metadata:
+      labels:
+        app: order-service
+    spec:
+      nodeSelector:
+        order-service: "true"
+      containers:
+      - name: order-service
+        image: {{ cluster_cfg['cluster']['docker-registry']['prefix'] }}order-service
+        imagePullPolicy: Always
+        ports:
+          - name: order-service01
+            containerPort: 2003
+        volumeMounts:
+        - mountPath: /home/order-service
+          name: order-service-path
+        - mountPath: /data/order-service
+          name: order-service-log-path
+        - mountPath: /etc/kubernetes
+          name: kube-config-path
+        - mountPath: /abnormal_data_dir
+          name: abnormal-data-dir
+        args: ["sh", "-c", "nohup java $JAVA_OPTS -jar -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=128m -Xms1024m -Xmx1024m -Xmn256m -Xss256k -XX:SurvivorRatio=8 -XX:+UseConcMarkSweepGC order-service.jar --spring.profiles.active=dev", "&"]
+      hostAliases:
+      - ip: "10.10.1.5"
+        hostnames:
+        - "k8s.api.server"
+        - "foo.remote"
+      - ip: "127.0.0.1"
+        hostnames:
+        - "foo.localhost"
+      - ip: "0.0.0.0"
+        hostnames:
+        - "foo.all"
+      #利用admin-rbac.yaml来获取权限
+      #serviceAccount: config-reader
+      #serviceAccountName: config-reader
+      #restartPolicy: Always
+      volumes:
+      - name: order-service-path
+        hostPath:
+          path: /var/pai/order-service
+      - name: order-service-log-path
+        hostPath:
+          path: /data/order-service
+      - name: kube-config-path
+        hostPath:
+          path: /etc/kubernetes
+      - name: abnormal-data-dir
+        hostPath:
+          path: /data/images/detect_result/defect

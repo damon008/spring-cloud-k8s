@@ -1,0 +1,31 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: gateway-service
+data:
+  application.yaml: |-
+    greeting:
+      message: Say Hello to the World
+    farewell:
+      message: Say Goodbye
+    ---
+    spring:
+      profiles: dev
+    greeting:
+      message: Say Hello to the Developers
+    farewell:
+      message: Say Goodbye to the Developers
+    ---
+    spring:
+      profiles: test
+    greeting:
+      message: Say Hello to the Test
+    farewell:
+      message: Say Goodbye to the Test
+    ---
+    spring:
+      profiles: prod
+    greeting:
+      message: Say Hello to the Prod
+    farewell:
+      message: Say Goodbye to the Prod

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: admin-web-service
+  namespace: default
+spec:
+  ports:
+  - name: admin-web01
+    port: 2001
+    targetPort: admin-web01
+  selector:
+    app: admin-web

@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-service-deployment
+  labels:
+    app: gateway-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway-service
+  template:
+    metadata:
+      labels:
+        app: gateway-service
+    spec:
+      nodeSelector:
+        gateway-service: "true"
+      containers:
+      - name: gateway-service
+        image: {{ cluster_cfg['cluster']['docker-registry']['prefix'] }}gateway-service
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 5555
+            hostPort: 5555
+        volumeMounts:
+        - mountPath: /home/gateway-service
+          name: gateway-service-path
+        - mountPath: /data/gateway-service
+          name: gateway-service-log-path
+        - mountPath: /etc/kubernetes
+          name: kube-config-path
+        args: ["sh", "-c", "nohup java $JAVA_OPTS -jar -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=128m -Xms1024m -Xmx1024m -Xmn256m -Xss256k -XX:SurvivorRatio=8 -XX:+UseConcMarkSweepGC gateway-service.jar --spring.profiles.active=dev", "&"]
+      #利用admin-rbac.yaml来获取权限
+      #serviceAccount: config-reader
+      #serviceAccountName: config-reader
+      #restartPolicy: Always
+      volumes:
+      - name: gateway-service-path
+        hostPath:
+          path: /var/pai/gateway-service
+      - name: gateway-service-log-path
+        hostPath:
+          path: /data/gateway-service
+      - name: kube-config-path
+        hostPath:
+          path: /etc/kubernetes

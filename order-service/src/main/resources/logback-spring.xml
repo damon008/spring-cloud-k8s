@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="logbase.xml"/>
+    <logger name="org.springframework.web" level="INFO"/>
+    <logger name="com.damon" level="INFO"/>
+
+
+    <!--开发环境. 多个使用逗号隔开. -->
+    <springProfile name="dev">
+        <logger name="org.springframework.web" level="${logging.level.org.springframework.web}"/>
+        <logger name="com.damon" level="${logging.level.com.damon}"/>
+        <root level="INFO">
+            <appender-ref ref="INFO_FILE" />
+            <appender-ref ref="ERROR_FILE" />
+            <appender-ref ref="CONSOLE" />
+        </root>
+    </springProfile>
+
+    <!-- 测试+生产环境. java -jar xxx.jar - -spring.profiles.active=prod -->
+    <springProfile name="staging,prod">
+        <logger name="org.springframework.web" level="${logging.level.org.springframework.web}"/>
+        <logger name="com.damon" level="${logging.level.com.damon}"/>
+        <root level="INFO">
+            <appender-ref ref="INFO_FILE" />
+            <appender-ref ref="ERROR_FILE" />
+        </root>
+    </springProfile>
+</configuration>

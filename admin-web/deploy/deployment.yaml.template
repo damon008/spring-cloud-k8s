@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-web-deployment
+  labels:
+    app: admin-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: admin-web
+  template:
+    metadata:
+      labels:
+        app: admin-web
+    spec:
+      nodeSelector:
+        admin-web: "true"
+      containers:
+      - name: admin-web
+        image: {{ cluster_cfg['cluster']['docker-registry']['prefix'] }}admin-web
+        imagePullPolicy: Always
+        ports:
+          - name: admin-web01
+            containerPort: 2001
+        volumeMounts:
+        - mountPath: /home/admin-web
+          name: admin-web-path
+        - mountPath: /data/admin-web
+          name: admin-web-log-path
+        - mountPath: /etc/kubernetes
+          name: kube-config-path
+        - mountPath: /abnormal_data_dir
+          name: abnormal-data-dir
+        args: ["sh", "-c", "nohup java $JAVA_OPTS -jar -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=128m -Xms1024m -Xmx1024m -Xmn256m -Xss256k -XX:SurvivorRatio=8 -XX:+UseConcMarkSweepGC admin-web.jar --spring.profiles.active=dev", "&"]
+      hostAliases:
+      - ip: "10.10.1.5"
+        hostnames:
+        - "k8s.api.server"
+        - "foo.remote"
+      - ip: "127.0.0.1"
+        hostnames:
+        - "foo.localhost"
+      - ip: "0.0.0.0"
+        hostnames:
+        - "foo.all"
+      #利用admin-rbac.yaml来获取权限
+      #serviceAccount: config-reader
+      #serviceAccountName: config-reader
+      #restartPolicy: Always
+      volumes:
+      - name: admin-web-path
+        hostPath:
+          path: /var/pai/admin-web
+      - name: admin-web-log-path
+        hostPath:
+          path: /data/admin-web
+      - name: kube-config-path
+        hostPath:
+          path: /etc/kubernetes
+      - name: abnormal-data-dir
+        hostPath:
+          path: /data/images/detect_result/defect

@@ -1,0 +1,44 @@
+spring:
+  cloud:
+    kubernetes:
+      discovery:
+        all-namespaces: true
+    gateway:
+      discovery:
+        locator:
+          enabled: true #并且我们并没有给每一个服务单独配置路由 而是使用了服务发现自动注册路由的方式
+          lowerCaseServiceId: true
+      
+      routes: #路由配置:参数为一个List
+      - id: admin-web
+        uri: lb://admin-web-service
+        order: -1
+        predicates:
+        - Path=/admin-web/**
+        filters:
+        - StripPrefix=1
+            
+            
+      - id: order-service
+        uri: lb://order-service-service
+        order: -1
+        predicates:
+        - Path=/order-service/**
+        filters:
+        - StripPrefix=1
+        - name: RequestRateLimiter
+          args:
+            redis-rate-limiter.replenishRate: 1  # 允许用户每秒处理多少个请求
+            redis-rate-limiter.burstCapacity: 3  # 令牌桶的容量，允许在一秒钟内完成的最大请求数
+            key-resolver: "#{@ipKeyResolver}" #SPEL表达式取的对应的bean
+            
+
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  mvc:
+    throw-exception-if-no-handler-found: true
+  main:
+    allow-bean-definition-overriding: true # 当遇到同样名称时，是否允许覆盖注册

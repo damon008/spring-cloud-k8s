@@ -1,0 +1,1 @@
+kubectl apply --overwrite=true -f admin-web-config.yaml || exit $?

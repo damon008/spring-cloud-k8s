@@ -1,0 +1,61 @@
+server:
+  port: 2003
+  undertow:
+    accesslog:
+      enabled: false
+      pattern: combined
+  servlet:
+    session:
+      timeout: PT120M
+      cookie:
+        name: ORDER-SERVICE-SESSIONID #防止Cookie冲突，冲突会导致登录验证不通过
+        
+
+client:
+  http:
+    request:
+      connectTimeout: 8000
+      readTimeout: 30000
+      
+  
+backend:
+  ribbon:
+    eureka:
+      enabled: false
+    client:
+      enabled: true
+    ServerListRefreshInterval: 5000
+    
+   
+#引入Feign
+#feign:
+  #sentinel:
+    #enabled: true
+    
+ribbon:
+  ConnectTimeout: 2000
+  ReadTimeout: 3000
+  eager-load:
+    enabled: true
+    clients: admin-web-service
+  MaxAutoRetries: 1 #对第一次请求的服务的重试次数
+  MaxAutoRetriesNextServer: 1 #要重试的下一个服务的最大数量（不包括第一个服务）
+  #listOfServers: localhost:5556,localhost:5557
+  #ServerListRefreshInterval: 2000
+  OkToRetryOnAllOperations: true
+  NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule #com.damon.config.RibbonConfiguration #自定义策略类
+  
+  
+hystrix:
+  command:
+    BackendCall: #default or commandKey的值
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+  threadpool:
+    BackendCallThread:
+      coreSize: 5
+
+
+

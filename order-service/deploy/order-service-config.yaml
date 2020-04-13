@@ -1,0 +1,128 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: order-service
+data:
+  application.yaml: |-
+    greeting:
+      message: Say Hello to the World
+    ---
+    spring:
+      profiles: dev
+    greeting:
+      message: Say Hello to the Developers
+      container_command: bitacube /usr/local/sss/sss_so /usr/local/sss/sss_config /usr/local/sss/model_dir
+      model_dir_path: /usr/local/sss/model_dir
+      so_path: /usr/local/sss/sss_so
+      config_path: /usr/local/sss/sss_config
+      task_role_name: test
+      container_name: test
+      container_workdir: /usr/local/sss
+      init_containers_image: frameworkcontroller/frameworkbarrier
+      service_account_name: frameworkbarrier
+      spring_mq_host: k8s.api.server
+      spring_mq_port: "5672"
+      spring_mq_user: "admin"
+      spring_mq_pwd: "admin"
+      jdbc_driverClassName: com.mysql.jdbc.Driver
+      jdbc_url: jdbc:mysql://k8s.api.server:3306/sss?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false
+      jdbc_username: root
+      jdbc_password: xxx
+      spring_redis_host: k8s.api.server
+      spring_redis_port: "6379"
+      spring_redis_pwd: "xylx1.t123"
+      kube_apiserver_address: http://k8s.api.server:8080
+      image_path: /home/leinao/electricity-application/image
+      volume_image_path: /home/leinao/electricity-application/image
+      sss_job_namespace: sss
+      api_version: apps/v1beta1
+      remote_deployment_url: http://k8s.api.server:8080/apis/apps/v1/namespaces/DeploymentNamespace/deployments
+      remote_pods_url: http://k8s.api.server:8080/api/v1/namespaces/DeploymentNamespace/pods
+      remote_deployment_pod_log_url: http://k8s.api.server:8080/api/v1/namespaces/DeploymentNamespace/pods/DeploymentPod/log
+      base_path: /ghome
+      chunk_size: 1024
+      expire_time: 7200000
+      cas_url: http://edge-cas-service/login
+      admin_web_url: http://admin-web-service
+      create_job_url: http://xsxs-app-v3-service/createService
+      abnormal_data_dir: /abnormal_data_dir
+    ---
+    spring:
+      profiles: test
+    greeting:
+      message: Say Hello to the Test
+      container_command: bitacube /usr/local/sss/sss_so /usr/local/sss/sss_config /usr/local/sss/model_dir
+      model_dir_path: /usr/local/sss/model_dir
+      so_path: /usr/local/sss/sss_so
+      config_path: /usr/local/sss/sss_config
+      task_role_name: test
+      container_name: test
+      container_workdir: /usr/local/sss
+      init_containers_image: frameworkcontroller/frameworkbarrier
+      service_account_name: frameworkbarrier
+      spring_mq_host: k8s.api.server
+      spring_mq_port: "5672"
+      spring_mq_user: "admin"
+      spring_mq_pwd: "admin"
+      jdbc_driverClassName: com.mysql.jdbc.Driver
+      jdbc_url: jdbc:mysql://k8s.api.server:3306/sss?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false
+      jdbc_username: root
+      jdbc_password: xxx
+      spring_redis_host: k8s.api.server
+      spring_redis_port: "6379"
+      spring_redis_pwd: "xylx1.t123"
+      kube_apiserver_address: http://k8s.api.server:8080
+      image_path: /home/leinao/electricity-application/image
+      volume_image_path: /home/leinao/electricity-application/image
+      sss_job_namespace: sss
+      api_version: apps/v1beta1
+      remote_deployment_url: http://k8s.api.server:8080/apis/apps/v1/namespaces/DeploymentNamespace/deployments
+      remote_pods_url: http://k8s.api.server:8080/api/v1/namespaces/DeploymentNamespace/pods
+      remote_deployment_pod_log_url: http://k8s.api.server:8080/api/v1/namespaces/DeploymentNamespace/pods/DeploymentPod/log
+      base_path: /ghome
+      chunk_size: 1024
+      expire_time: 7200000
+      cas_url: http://edge-cas-service/login
+      admin_web_url: http://admin-web-service
+      create_job_url: http://electricity-app-v3-service/createService
+      abnormal_data_dir: /abnormal_data_dir
+    ---
+    spring:
+      profiles: prod
+    greeting:
+      message: Say Hello to the Prod
+      container_command: bitacube /usr/local/sss/sss_so /usr/local/sss/sss_config /usr/local/sss/model_dir
+      model_dir_path: /usr/local/sss/model_dir
+      so_path: /usr/local/sss/sss_so
+      config_path: /usr/local/sss/sss_config
+      task_role_name: test
+      container_name: test
+      container_workdir: /usr/local/sss
+      init_containers_image: frameworkcontroller/frameworkbarrier
+      service_account_name: frameworkbarrier
+      spring_mq_host: k8s.api.server
+      spring_mq_port: "5672"
+      spring_mq_user: "admin"
+      spring_mq_pwd: "admin"
+      jdbc_driverClassName: com.mysql.jdbc.Driver
+      jdbc_url: jdbc:mysql://k8s.api.server:3306/sss?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false
+      jdbc_username: root
+      jdbc_password: xxx
+      spring_redis_host: k8s.api.server
+      spring_redis_port: "6379"
+      spring_redis_pwd: "xylx1.t123"
+      kube_apiserver_address: http://k8s.api.server:8080
+      image_path: /home/leinao/electricity-application/image
+      volume_image_path: /home/leinao/electricity-application/image
+      sss_job_namespace: sss
+      api_version: apps/v1beta1
+      remote_deployment_url: http://k8s.api.server:8080/apis/apps/v1/namespaces/DeploymentNamespace/deployments
+      remote_pods_url: http://k8s.api.server:8080/api/v1/namespaces/DeploymentNamespace/pods
+      remote_deployment_pod_log_url: http://k8s.api.server:8080/api/v1/namespaces/DeploymentNamespace/pods/DeploymentPod/log
+      base_path: /ghome
+      chunk_size: 1024
+      expire_time: 7200000
+      cas_url: http://edge-cas-service/login
+      admin_web_url: http://admin-web-service
+      create_job_url: http://electricity-app-v3-service/createService
+      abnormal_data_dir: /abnormal_data_dir

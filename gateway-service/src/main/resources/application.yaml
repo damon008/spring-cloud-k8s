@@ -1,0 +1,48 @@
+server:
+  port: 5555
+  undertow:
+    accesslog:
+      enabled: false
+      pattern: combined
+  servlet:
+    session:
+      timeout: PT120M
+
+
+
+spring:
+  application:
+    name: gateway-service
+  redis: #redis相关配置
+    database: 8
+    host: 10.10.1.5 #localhost
+    port: 6379
+    password: xylx1.t123 #sofawang #有密码时设置
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+    timeout: 10000ms
+
+  
+logging:
+  path: /data/${spring.application.name}/logs
+
+# we enable some of the management endpoints to make it possible to restart the application
+management:
+  endpoint:
+    restart:
+      enabled: true
+    health:
+      enabled: true
+    info:
+      enabled: true
+
+
+client:
+  http:
+    request:
+      connectTimeout: 8000
+      readTimeout: 30000
+      

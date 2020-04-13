@@ -1,0 +1,1 @@
+kubectl apply --overwrite=true -f order-service-config.yaml || exit $?

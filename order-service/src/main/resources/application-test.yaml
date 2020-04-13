@@ -1,0 +1,7 @@
+logging:
+  level:
+    com:
+      damon: INFO
+    org:
+      springframework:
+        web: INFO

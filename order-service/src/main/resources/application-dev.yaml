@@ -1,0 +1,7 @@
+logging:
+  level:
+    com:
+      damon: DEBUG
+    org:
+      springframework:
+        web: DEBUG

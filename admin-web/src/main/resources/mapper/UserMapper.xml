@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.damon.user.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.damon.user.model.SysUser" >
+    <result column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="is_admin" property="isAdmin" jdbcType="INTEGER" />
+    <result column="user_type" property="userType" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="login_time" property="loginTime" jdbcType="BIGINT" />
+    <result column="expire_time" property="expireTime" jdbcType="BIGINT" />
+    <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+    <result column="login_type" property="loginType" jdbcType="INTEGER" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, user_id, is_admin, user_type, username, password,real_name,phone,email,login_time,expire_time,del_flag,login_type,remarks,create_by,create_time,update_by,update_time
+  </sql>
+  
+  <select id="login" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user where username = #{0} and password = #{1} and del_flag = 0
+  </select>
+  
+  <select id="getUserByUsername" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user where username = #{0}
+  </select>
+  
+  <update id="updatePwd">
+  	update sys_user set password = #{1} where username = #{0}
+  </update>
+  
+</mapper>
