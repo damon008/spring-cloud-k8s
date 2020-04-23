@@ -12,4 +12,9 @@ curl -i -H "Accept: application/json" -X GET http://10.10.1.80:5555/order-servic
 
 3. 本次提供基于网关的限流功能、基于k8s ConfigMap实现配置管理、基于k8s的Service实现服务发现功能，以及基于Ribbon的LB 、基于Hystrix的熔断机制
 
-4. 欢迎关注公众号：程序猿Damon
+
+#### 参与贡献
+
+## 欢迎关注
+
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0414/104902_aa07fda5_1459921.jpeg "qrcode_for_gh_5f5844a6d00e_344.jpg")
