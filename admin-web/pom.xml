@@ -28,7 +28,7 @@
 		<springcloud.version>Greenwich.SR3</springcloud.version>
 		<!-- <springcloud.version>2.1.8.RELEASE</springcloud.version> -->
 		<springcloud.kubernetes.version>1.1.1.RELEASE</springcloud.kubernetes.version>
-		<mysql.version>5.1.46</mysql.version>
+		<mysql.version>8.0.16</mysql.version>
 	</properties>
 
 	<dependencyManagement>
