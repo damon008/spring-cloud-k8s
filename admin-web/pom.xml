@@ -24,7 +24,7 @@
 		<swagger.version>2.6.1</swagger.version>
 		<xstream.version>1.4.7</xstream.version>
 		<pageHelper.version>4.1.6</pageHelper.version>
-		<fastjson.version>1.2.51</fastjson.version>
+		<fastjson.version>1.2.83</fastjson.version>
 		<springcloud.version>Greenwich.SR3</springcloud.version>
 		<!-- <springcloud.version>2.1.8.RELEASE</springcloud.version> -->
 		<springcloud.kubernetes.version>1.1.1.RELEASE</springcloud.kubernetes.version>
