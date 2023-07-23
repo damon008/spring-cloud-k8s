@@ -23,7 +23,7 @@
 		<java.version>1.8</java.version>
 		<swagger.version>2.6.1</swagger.version>
 		<xstream.version>1.4.7</xstream.version>
-		<pageHelper.version>4.1.6</pageHelper.version>
+		<pageHelper.version>5.3.1</pageHelper.version>
 		<fastjson.version>1.2.51</fastjson.version>
 		<springcloud.version>Greenwich.SR3</springcloud.version>
 		<!-- <springcloud.version>2.1.8.RELEASE</springcloud.version> -->
